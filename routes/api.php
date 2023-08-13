@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,3 +25,6 @@ Route::get('/test', function () {
         200
     );
 });
+
+Route::post('register',[AuthenticationController::class,'register']);
+Route::post('login',[AuthenticationController::class,'login']);
