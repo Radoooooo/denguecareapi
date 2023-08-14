@@ -26,5 +26,8 @@ Route::get('/test', function () {
     );
 });
 
+
+Route::post('adminlogin',[AuthenticationController::class,'adminlogin']);
+
 Route::post('register',[AuthenticationController::class,'register']);
 Route::post('login',[AuthenticationController::class,'login']);
