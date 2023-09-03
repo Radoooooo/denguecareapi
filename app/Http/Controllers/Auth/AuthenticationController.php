@@ -12,6 +12,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Passport\Token;
 
 class AuthenticationController extends Controller
 {
@@ -65,6 +66,7 @@ class AuthenticationController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'admin_type' => $request->admin_type,
         ];
 
         $admin = Admin::create($adminData);
@@ -80,7 +82,7 @@ class AuthenticationController extends Controller
         $request->validated();
 
         $admin =  Admin::whereEmail($request->email)->first();
-
+        $adminType = $admin->admin_type;
 
         if (!$admin || !Hash::check($request->password, $admin->password)) {
             return response([
@@ -93,13 +95,30 @@ class AuthenticationController extends Controller
         return response([
             'admin' => $admin,
             'token' => $token,
+            'admin_type' => $adminType,
         ], 200);
-
     }
-
-    public function logout()
+    public function logoutUser(User $user)
     {
+        // Revoke the user's token
+        $user->tokens()->revoke();
+
+        // Logout the user
         Auth::logout();
+
+        return response([
+            'message' => "Logout success."
+        ], 200);
+    }
+    public function logoutAdmin(Admin $admin)
+    {
+        // Revoke the user's token
+        $admin->tokens()->delete();
+        
+
+        // Logout the user
+        Auth::logout();
+
         return response([
             'message' => "Logout success."
         ], 200);

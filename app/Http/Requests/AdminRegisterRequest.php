@@ -25,6 +25,7 @@ class AdminRegisterRequest extends FormRequest
             'name'=> 'required|max:64|unique:admins',
             'email'=>'required|email|unique:admins',
             'password'=>'required|min:8',
+            'admin_type'=>'required',
         ];
     }
 }

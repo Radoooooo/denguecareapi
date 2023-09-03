@@ -31,4 +31,5 @@ Route::post('adminlogin',[AuthenticationController::class,'adminlogin']);
 Route::post('adminregister',[AuthenticationController::class,'adminregister']);
 Route::post('register',[AuthenticationController::class,'register']);
 Route::post('login',[AuthenticationController::class,'login']);
-Route::post('logout',[AuthenticationController::class,'logout']);
+Route::post('logoutUser',[AuthenticationController::class,'logoutUser']);
+Route::post('logoutAdmin',[AuthenticationController::class,'logoutAdmin']);
